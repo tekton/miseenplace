@@ -18,6 +18,15 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^login', 'recipie.views.login'),
+    # company API
+    url(r'^api/company', include("recipie.urls")),
+    # end company API
+    # MainDoc Interactions
+    url(r'^api/maindoc/current/create', 'recipie.views.api_create_main_doc'),
+    url(r'^api/maindoc/dev/create', 'recipie.views.api_create_main_doc'),
+    url(r'^api/maindoc/1.0/create', 'recipie.views.api_create_main_doc'),
+    # end MainDoc
     url(r'^/', 'recipie.views.index'),
     url(r'^', 'recipie.views.index'),
 ]
