@@ -1,7 +1,11 @@
 from mongoengine import *
 import pymongo
+import os
 
-connect("test", host='127.0.0.1', port=27017, read_preference=pymongo.ReadPreference.PRIMARY)
+connect("miseenplace",
+        host=os.getenv("MONGO_HOST", '127.0.0.1'),
+        port=os.getenv("MONGO_PORT", 27017),
+        read_preference=pymongo.ReadPreference.PRIMARY)
 default_document = """#!/bin/bash
 sudo mkdir -p /opt/[[company]]
 sudo chmod [[opt_level]] /opt/[[company]]
