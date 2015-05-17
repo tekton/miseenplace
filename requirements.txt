@@ -1,6 +1,7 @@
 Django==1.8.1
 pymongo==2.8.0
 mongoengine==0.9.0
+gunicorn
 celery
 redis
 ujson
