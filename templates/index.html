@@ -12,9 +12,11 @@
 
 {% block container %}
       <div class="starter-template">
-        <h1>Actions</h1>
-        <p class="lead"><a href="/setup/create">Create New Document Setup</a></p>
-        <h2>Saved and Personalized Version</h2>
-        <p class="lead"><a href="/api/latest/id">Company Name w/clarifier</a></p>
+        <h2>Saved and Personalized</h2>
+        {% for doc in default_docs %}          
+            <p class="lead"><a href="{% url 'recipie.views.morph_default_doc' doc.id %}">{{doc.id}}</a></p>
+        {% empty %}
+            <p class="lead">There are no documents to download...yet.</p>
+        {% endfor %}
       </div>
 {% endblock container %}
