@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block additionalHeadCSS %}
+      body {
+        padding-top: 50px;
+      }
+      .starter-template {
+        padding: 40px 15px;
+        text-align: center;
+      }
+
+      pre {
+        text-align: left;
+      }
+{% endblock additionalHeadCSS %}
+
+{% block container %}
+      <div class="starter-template">
+        <h2>Saved doc as...</h2>
+        <pre>{{out_doc}}</pre>
+        Download Link: <a href="{% url 'recipie.views.morph_default_doc' obj_id %}">{{obj_id}}</a>
+      </div>
+{% endblock container %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block additionalHeadCSS %}
+body {
+  padding-top: 50px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.form-signin label {
+    width: 10em;
+    display: block;
+    float: left;
+}
+
+.form-signin input {
+    margin-left: 10em;
+    width: 50%;
+    {# border: 1px solid red; #}
+}
+
+.form_row {
+    padding: 5px;
+}
+
+{% endblock additionalHeadCSS %}
+
+{% block container %}
+      <form class="form-signin" action="/default/create" method="POST">
+        {% csrf_token %}
+        <h2 class="form-signin-heading">Please fill out at the OAuth Section</h2>
+        {% for field, value in defaults.items %}
+            {% if field != "user" %}
+                <div class="form_row">
+                    <label>{{field}}</label>
+                    <input type="text" name="{{field}}" {% if value != None%}placeholder="{{value}}"{% endif %}> 
+                </div>
+            {% endif %}
+        {% endfor %}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Create Setup Document</button>
+      </form>
+{% endblock container %}

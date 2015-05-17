@@ -1,7 +1,10 @@
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render_to_response
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.http import JsonResponse, HttpResponse
+from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.models import User
 import ujson as json
 import logging
 
@@ -10,6 +13,7 @@ from recipie.models import Company, MainDoc, DefaultDoc, get_defaults, default_d
 logger = logging.getLogger(__name__)
 
 
+@login_required(login_url='/login')
 def index(request):
     default_docs = DefaultDoc.objects.filter(user=request.user.id)
     for doc in default_docs:
@@ -18,8 +22,37 @@ def index(request):
                                              "active": "home"}, context_instance=RequestContext(request))
 
 
-def login(request):
+def user_registration(request):
+    if request.method == "POST":
+        # try to authenticate them
+        if request.POST['password'] == request.POST['password2']:
+            user = User.objects.create_user(request.POST['username'],
+                                            request.POST['username'],
+                                            request.POST['password'])
+            try:
+                user.save()
+                return redirect("recipie.views.user_login_form")
+            except Exception as e:
+                print(e)
+    return render_to_response("registration.html", {}, context_instance=RequestContext(request))
+
+
+def user_login_form(request):
+    if request.method == "POST":
+        # try to authenticate them
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return redirect("/")
     return render_to_response("login.html", {}, context_instance=RequestContext(request))
+
+
+def user_logout(request):
+    logout(request)
+    return redirect("/")
 
 
 @csrf_exempt
@@ -111,6 +144,8 @@ def process_default_doc(request):
                     setattr(default_doc, x, defaults[x])
             else:
                 pass
+        if default_doc.user is None:
+            default_doc.user = request.user.id
         try:
             default_doc.save()
             return JsonResponse({"msg": "Able to save default doc",
@@ -123,17 +158,30 @@ def process_default_doc(request):
         return JsonResponse({"msg": "Unable to process non POST requests"})
 
 
-def morph_default_doc(request, obj_id):
-    print(obj_id)
+def get_morphed_doc(obj_id):
     try:
         default_doc = DefaultDoc.objects.get(id=obj_id)
     except Exception as e:
         print(e)
-        return JsonResponse({"msg": "Unable to find requested default document"})
+        return False
     out_doc = default_document
     for field in DefaultDoc._fields_ordered:
         # the following should be able to be int he same line but it was causing issues _sometimes_
         old = "[[{}]]".format(field)
         new = str(getattr(default_doc, field))
         out_doc = out_doc.replace(old, new)
+    return out_doc
+
+
+def view_default_doc(request, obj_id):
+    out_doc = get_morphed_doc(obj_id)
+    return render_to_response('view_doc.html',
+                              {"out_doc": out_doc,
+                               "obj_id": obj_id},
+                              context_instance=RequestContext(request))
+
+
+def morph_default_doc(request, obj_id):
+    print(obj_id)
+    out_doc = get_morphed_doc(obj_id)
     return HttpResponse(out_doc, content_type='text/plain')

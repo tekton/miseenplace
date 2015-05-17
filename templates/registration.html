@@ -41,27 +41,18 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-
-.center {
-  text-align: center;
-}
 {% endblock additionalHeadCSS %}
 
 {% block container %}
-      <form class="form-signin" method="POST" action="{% url 'recipie.views.user_login_form' %}">
+      <form class="form-signin" method="POST" action="{% url 'recipie.views.user_registration' %}">
         {% csrf_token %}
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input name="username" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me" /> Remember me
-          </label>
-        </div>
+        <label for="inputPassword2" class="sr-only">Password</label>
+        <input name="password2" type="password" id="inputPassword2" class="form-control" placeholder="Password" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <div class="center"><a href="{% url 'recipie.views.user_registration' %}">Registration</a></div>
       </form>
-
 {% endblock container %}

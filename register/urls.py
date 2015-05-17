@@ -18,7 +18,10 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^login', 'recipie.views.login'),
+    url(r'^login', 'recipie.views.user_login_form'),
+    url(r'^logout', 'recipie.views.user_logout'),
+    url(r'^registration', 'recipie.views.user_registration'),
+    url(r"/account/login", 'recipie.views.user_login_form'),
     # company API
     url(r'^api/company', include("recipie.urls")),
     # end company API
@@ -29,6 +32,7 @@ urlpatterns = [
     # end MainDoc
     url(r'^default/create', 'recipie.views.process_default_doc'),
     url(r'^default/(.*)/morph', 'recipie.views.morph_default_doc'),
+    url(r'^default/(.*)/view', 'recipie.views.view_default_doc'),
     url(r'^default', 'recipie.views.form_default_doc_view'),
     # default_doc
     url(r'^/', 'recipie.views.index'),
