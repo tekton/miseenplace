@@ -23,6 +23,17 @@ Python 2.7+
 MongoDB 2.6+  
 redis 2.6+  
 
+Running with gunicorn
+---------------------
+
+* gunicorn -c gunciorn.conf register.wsgi
+* feel free to daemonzie it from there!
+
+
+Runnign behind nginx
+--------------------
+
+There's an example nginx conf file in the root of the directory; works well if gunicorn is supervised by something like supervisor!
 
 Notes and General Ideas
 =======================
