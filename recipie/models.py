@@ -10,7 +10,7 @@ default_document = """#!/bin/bash
 sudo mkdir -p /opt/[[company]]
 sudo chmod [[opt_level]] /opt/[[company]]
 cd /opt/[[company]]
-git clone http://[[oauth]]@github.com/[[company]]/[[cookbooks]].git
+git clone http://[[oauth]]@github.com/[[company_github]]/[[cookbooks]].git
 echo "cookbook_path [\"/opt/[[company]]/[[cookbooks]]\"]" >> /opt/[[company]]/[[client_rb]]
 [[chef_install]]
 echo "Run your setup by running: chef-solo -j /opt/[[company]]/[[cookbooks]]/[[dev_setup_json]] -c /opt/[[company]]/[[client_rb]]"
@@ -48,3 +48,4 @@ class DefaultDoc(Document):
     dev_setup_json = StringField(default="dev_setup.json")  # requires extension: ie dev_setup.json
     client_rb = StringField(default="client.rb")  # default to client.rb
     chef_install = StringField(default="curl -L https://www.chef.io/chef/install.sh | sudo bash")  # for chef client
+    company_github = StringField(required=True)
