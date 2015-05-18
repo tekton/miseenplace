@@ -10,7 +10,7 @@ default_document = """#!/bin/bash
 sudo mkdir -p /opt/[[company]]
 sudo chmod [[opt_level]] /opt/[[company]]
 cd /opt/[[company]]
-git checkout http://[[oauth]]@github.com/[[company]]/[[cookbooks]].git
+git clone http://[[oauth]]@github.com/[[company]]/[[cookbooks]].git
 echo "cookbook_path [\"/opt/[[company]]/[[cookbooks]]\"]" >> /opt/[[company]]/[[client_rb]]
 [[chef_install]]
 echo "Run your setup by running: chef-solo -j /opt/[[company]]/[[cookbooks]]/[[dev_setup_json]] -c /opt/[[company]]/[[client_rb]]"
