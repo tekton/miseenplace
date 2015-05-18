@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 import ujson as json
 import logging
 
@@ -148,8 +149,7 @@ def process_default_doc(request):
             default_doc.user = request.user.id
         try:
             default_doc.save()
-            return JsonResponse({"msg": "Able to save default doc",
-                                 "id": str(default_doc.id)})
+            return redirect(reverse("recipie.views.view_default_doc", args=[str(default_doc.id)]))
         except Exception as e:
             print("Unable to save default doc")
             print(e)
