@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^login', 'recipie.views.user_login_form'),
     url(r'^logout', 'recipie.views.user_logout'),
     url(r'^registration', 'recipie.views.user_registration'),
-    url(r"/account/login", 'recipie.views.user_login_form'),
+    url(r"^account/login", 'recipie.views.user_login_form'),
     # company API
     url(r'^api/company', include("recipie.urls")),
     # end company API
