@@ -13,8 +13,12 @@ cd /opt/[[company]]
 sudo apt-get -y install git curl
 git clone http://[[oauth]]@github.com/[[company_github]]/[[cookbooks]].git
 echo "cookbook_path [\\"/opt/[[company]]/[[cookbooks]]\\"]" >> /opt/[[company]]/[[client_rb]]
+echo "environment_path [\\"/opt/[[company]]/[[cookbooks]]/environments\\"]" >> /opt/[[company]]/[[client_rb]]
+echo "role_path [\\"/opt/[[company]]/[[cookbooks]]/roles\\"]" >> /opt/[[company]]/[[client_rb]]
+echo "local_mode true" >> /opt/[[company]]/[[client_rb]]
 [[chef_install]]
-echo "Run your setup by running: chef-solo -c /opt/[[company]]/[[client_rb]] -j /opt/[[company]]/[[cookbooks]]/[[dev_setup_json]]"
+echo "You should update the dev.json in \"/opt/[[company]]/[[cookbooks]]/environments\" before continuing..."
+echo "Run your setup by running: sudo chef-client -z -c /opt/[[company]]/[[client_rb]] -j /opt/[[company]]/[[cookbooks]]/[[dev_setup_json]]"
 """
 
 json_document = """{

@@ -32,7 +32,8 @@ def user_registration(request):
                                             request.POST['password'])
             try:
                 user.save()
-                return redirect("recipie.views.user_login_form")
+                return user_login_form(request)
+                # return redirect("recipie.views.user_login_form")
             except Exception as e:
                 print(e)
     return render_to_response("registration.html", {}, context_instance=RequestContext(request))
