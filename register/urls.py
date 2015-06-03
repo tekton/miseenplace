@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^api/maindoc/1.0/create', 'recipie.views.api_create_main_doc'),
     # end MainDoc
     url(r'^default/create', 'recipie.views.process_default_doc'),
-    url(r'^default/(.*)/morph', 'recipie.views.morph_default_doc'),
+    url(r'^default/(.*)/setup.bash', 'recipie.views.morph_default_doc'),
     url(r'^default/(.*)/view', 'recipie.views.view_default_doc'),
     url(r'^default', 'recipie.views.form_default_doc_view'),
     # default_doc

@@ -10,11 +10,16 @@ default_document = """#!/bin/bash
 sudo mkdir -p /opt/[[company]]
 sudo chmod [[opt_level]] /opt/[[company]]
 cd /opt/[[company]]
+sudo apt-get -y install git curl
 git clone http://[[oauth]]@github.com/[[company_github]]/[[cookbooks]].git
-echo "cookbook_path [\"/opt/[[company]]/[[cookbooks]]\"]" >> /opt/[[company]]/[[client_rb]]
+echo "cookbook_path [\\"/opt/[[company]]/[[cookbooks]]\\"]" >> /opt/[[company]]/[[client_rb]]
 [[chef_install]]
-echo "Run your setup by running: chef-solo -j /opt/[[company]]/[[cookbooks]]/[[dev_setup_json]] -c /opt/[[company]]/[[client_rb]]"
+echo "Run your setup by running: chef-solo -c /opt/[[company]]/[[client_rb]] -j /opt/[[company]]/[[cookbooks]]/[[dev_setup_json]]"
 """
+
+json_document = """{
+"run_list": [[[recipes]]]
+}"""
 
 
 def get_defaults(class_to_check):
@@ -39,13 +44,21 @@ class MainDoc(Document):
     user = LongField(required=True)
 
 
+class JsonDoc(Document):
+    company = StringField(required=True)  # needs to resolve down to name later
+    user = LongField(required=True)  # for filtering really
+    root = StringField(default=json_document)
+    recipes = ListField()
+    attributes = StringField()
+
+
 class DefaultDoc(Document):
     company = StringField(required=True)  # needs to resolve down to name later
     user = LongField(required=True)  # for filtering really
     oauth = StringField(required=True, unique=False)  # custom per setup, genreated at github.com
     opt_level = LongField(default=777)  # default 777
     cookbooks = StringField(default="cookbooks")  # name of the repo and checklout location: ie cookbooks
-    dev_setup_json = StringField(default="dev_setup.json")  # requires extension: ie dev_setup.json
+    dev_setup_json = StringField(default="jsons/dev_setup.json")  # requires extension: ie dev_setup.json
     client_rb = StringField(default="client.rb")  # default to client.rb
     chef_install = StringField(default="curl -L https://www.chef.io/chef/install.sh | sudo bash")  # for chef client
     company_github = StringField(required=True)
