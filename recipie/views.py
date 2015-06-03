@@ -49,6 +49,10 @@ def user_login_form(request):
             if user.is_active:
                 login(request, user)
                 return redirect("/")
+            else:
+                logger.info("Unable to login...no active user")
+        else:
+            logger.error("No user with that user/pass exists!")
     return render_to_response("login.html", {}, context_instance=RequestContext(request))
 
 
