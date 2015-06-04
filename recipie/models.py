@@ -11,7 +11,7 @@ sudo mkdir -p /opt/[[company]]
 sudo chmod [[opt_level]] /opt/[[company]]
 cd /opt/[[company]]
 sudo apt-get -y install git curl
-git clone http://[[oauth]]@github.com/[[company_github]]/[[cookbooks]].git
+git clone https://[[oauth]]@github.com/[[company_github]]/[[cookbooks]].git
 echo "cookbook_path [\\"/opt/[[company]]/[[cookbooks]]\\"]" >> /opt/[[company]]/[[client_rb]]
 echo "environment_path [\\"/opt/[[company]]/[[cookbooks]]/environments\\"]" >> /opt/[[company]]/[[client_rb]]
 echo "role_path [\\"/opt/[[company]]/[[cookbooks]]/roles\\"]" >> /opt/[[company]]/[[client_rb]]
