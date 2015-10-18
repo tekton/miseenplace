@@ -4,3 +4,4 @@ VEN*/
 *.DS_Store
 *.log
 *.sqlite3
+static/CACHE
