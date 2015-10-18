@@ -9,4 +9,5 @@ urlpatterns = patterns('',
                        url(r'^/current/create', 'recipie.views.api_create_company'),
                        url(r'^/dev/company/create', 'recipie.views.api_create_company'),
                        url(r'^/1.0/company/create', 'recipie.views.api_create_company'),
+                       url(r"^/1.0/docs", 'recipie.views.api_default_docs')
                        )

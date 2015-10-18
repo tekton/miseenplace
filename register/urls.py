@@ -34,6 +34,8 @@ urlpatterns = [
     url(r'^default/(.*)/setup.bash', 'recipie.views.morph_default_doc'),
     url(r'^default/(.*)/view', 'recipie.views.view_default_doc'),
     url(r'^default', 'recipie.views.form_default_doc_view'),
+    # test react
+    url(r'^react', 'recipie.views.index_react'),
     # default_doc
     url(r'^/', 'recipie.views.index'),
     url(r'^', 'recipie.views.index'),

@@ -23,6 +23,22 @@ def index(request):
                                              "active": "home"}, context_instance=RequestContext(request))
 
 
+@login_required(login_url='/login')
+def index_react(request):
+    return render_to_response("index_react.html", {}, context_instance=RequestContext(request))
+
+
+@login_required(login_url='/login')
+def api_default_docs(request):
+    default_docs = DefaultDoc.objects.filter(user=request.user.id).as_pymongo()
+    rtn_list = []
+    for doc in default_docs:
+        logger.debug(doc)
+        doc["_id"] = "{}".format(doc["_id"])
+        rtn_list.append(doc)
+    return JsonResponse({"docs": rtn_list})
+
+
 def user_registration(request):
     if request.method == "POST":
         # try to authenticate them
