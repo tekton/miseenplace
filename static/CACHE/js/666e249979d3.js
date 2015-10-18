@@ -1,2 +1,0 @@
-var converter=new Showdown.converter();var Doc=React.createClass({displayName:'Doc',render:function(){var rawMarkup=converter.makeHtml(this.props.children.toString());return(React.createElement("div",{className:"defaultDoc"},React.createElement("span",{className:"commentAuthor"},this.props._id)));}});var CommentBox=React.createClass({displayName:'CommentBox',render:function(){return(React.createElement("div",{className:"commentBox"},"Future home of the things and stuff"));}})
-ReactDOM.render(React.createElement(CommentBox,null),document.getElementById('content'));
