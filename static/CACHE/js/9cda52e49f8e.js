@@ -1,0 +1,2 @@
+var converter=new Showdown.converter();var CommentBox=React.createClass({displayName:'CommentBox',render:function(){return(React.createElement("div",{className:"commentBox"},"Future home of the things and stuff"));}})
+ReactDOM.render(React.createElement(CommentBox,null),document.getElementById('comment'));
