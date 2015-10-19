@@ -19,7 +19,7 @@ var DDocList = React.createClass({
         var documentNodes = this.props.data.map(function (d) {
             console.log(d._id);
             return (
-                <DDoc d={d} />
+                <DDoc d={d} key={d._id}/>
             );
         });
         // return (
@@ -58,6 +58,7 @@ var DDocContent = React.createClass({
     componentDidMount: function() {
         this.loadDocsFromServer();
         console.log("componentDidMount");
+        setInterval(this.loadDocsFromServer, this.props.pollInterval);
     },
     getInitialState: function() {
         return {data: []};
@@ -73,7 +74,7 @@ var DDocContent = React.createClass({
     }
 });
 
-React.render(
-  <DDocContent url="/api/company/1.0/docs" pollInterval={2000} />,
-  document.getElementById('docs')
-);
+// React.render(
+//   <DDocContent url="/api/company/1.0/docs" pollInterval={2000} />,
+//   document.getElementById('docs_xyz')
+// );

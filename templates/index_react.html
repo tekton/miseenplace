@@ -17,4 +17,13 @@
         <script src="/static/js/default_docs.jsx" type="text/jsx" charset="utf-8"></script>
         {% endcompress %}
     </div>
+    <script type="text/javascript">
+        React.render(React.createElement(
+            DDocContent,
+            {
+                url:"/api/company/1.0/docs",
+                pollInterval:2000
+            }
+        ), document.getElementById('docs'));
+    </script>
 {% endblock container %}
